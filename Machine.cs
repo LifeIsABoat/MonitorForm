@@ -121,6 +121,20 @@ namespace ESMachineMonitorForm
             Console.WriteLine("bin {0}", ts.TotalMilliseconds);
             cmd = binPath + " " + imagePath;
             return getImageFromBin(binPath);
+                        cmd = "-device LPC1830 -Speed 50000 -IF JTAG -CommanderScript " + cmdTxt;
+            DateTime dt1 = DateTime.Now;
+            CallScript("jlink.exe", cmd);
+            DateTime dt2 = DateTime.Now;
+            TimeSpan ts = dt2.Subtract(dt1);
+            Console.WriteLine("example1 time {0}", ts.TotalMilliseconds);
+            cmd = binPath + " " + imagePath;
+            //return getImageFromBin(binPath);
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            CallScript("python.bat", cmd);
+            sw.Stop();
+            TimeSpan ts2 = sw.Elapsed;
+            Console.WriteLine("example2 time {0}", ts2.TotalMilliseconds);
         }
 
         public override void doCommand(string type, string command)
